@@ -20,7 +20,7 @@ public class WordCount {
       	SimpleIterator itr = counter.getIterator();
       	int i = 0;
       	while (itr.hasNext()) {
-        	 if (i == count.length - 1) {
+        	if (i == count.length - 1) {
             	DataCount[] temp = new DataCount[count.length * 2];
             	for (int j = 0; j < count.length; j++) {
                		temp[j] = count[j];
