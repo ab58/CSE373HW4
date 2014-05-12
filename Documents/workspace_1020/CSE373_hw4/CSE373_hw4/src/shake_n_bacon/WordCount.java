@@ -9,16 +9,29 @@ import providedCode.*;
  * descending order. You will need to modify this file.
  */
 public class WordCount {
-
-	// TODO: Replace this comment with your own as appropriate.
+   private static final int BASE = 1000;
+	
+   // TODO: Replace this comment with your own as appropriate.
 	// Implement a method that returns an array of DataCount objects
 	// containing each unique word.
 	private static DataCount[] getCountsArray(DataCounter counter) {
-		//System.err.println("Must implement getCountsArray in WordCount");
-		//System.exit(1);
-        DataCount[] dcArr = new DataCount[1000];
-		return dcArr;
+		DataCount[] count = new DataCount[BASE];
+      SimpleIterator itr = counter.getIterator();
+      int i = 0;
+      while (itr.hasNext()) {
+         if (i == count.length - 1) {
+            DataCount[] temp = new DataCount[count.length * 2];
+            for (int j = 0; j < count.length; j++) {
+               temp[j] = count[j];
+            }
+            count = temp;
+         }
+         count[i] = itr.next();
+         i++; 
+      }
+      return count;
 	}
+
 
 	// ////////////////////////////////////////////////////////////////////////
 	// /////////////// DO NOT MODIFY ALL THE METHODS BELOW ///////////////////
