@@ -16,20 +16,21 @@ public class WordCount {
 	// containing each unique word.
 	private static DataCount[] getCountsArray(DataCounter counter) {
 		DataCount[] count = new DataCount[BASE];
-      SimpleIterator itr = counter.getIterator();
-      int i = 0;
-      while (itr.hasNext()) {
-         if (i == count.length - 1) {
-            DataCount[] temp = new DataCount[count.length * 2];
-            for (int j = 0; j < count.length; j++) {
-               temp[j] = count[j];
-            }
-            count = temp;
-         }
-         count[i] = itr.next();
-         i++; 
-      }
-      return count;
+      		
+      	SimpleIterator itr = counter.getIterator();
+      	int i = 0;
+      	while (itr.hasNext()) {
+        	if (i == count.length - 1) {
+            	DataCount[] temp = new DataCount[count.length * 2];
+            	for (int j = 0; j < count.length; j++) {
+               		temp[j] = count[j];
+            	}
+            	count = temp;
+        	}
+        	count[i] = itr.next();
+        	i++; 
+      	}
+      	return count;
 	}
 
 
