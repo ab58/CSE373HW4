@@ -10,12 +10,19 @@ import providedCode.Hasher;
  */
 public class StringHasher implements Hasher {
 
+    int tableSize = 13;
 	/**
 	 * TODO Replace this comment with your own as appropriate.
 	 */
 	@Override
 	public int hash(String str) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		char[] cArr = str.toLowerCase().toCharArray();
+        int sum = 0;
+        for (int i=0; i<cArr.length; i++)
+        {
+            sum+=cArr[i];
+        }
+		return sum%tableSize;
 	}
 }
