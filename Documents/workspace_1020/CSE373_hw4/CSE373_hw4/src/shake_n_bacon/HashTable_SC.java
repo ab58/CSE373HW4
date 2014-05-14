@@ -62,36 +62,121 @@ public class HashTable_SC extends DataCounter {
             if (head==null)
             {
                 head = newNode;
+                head.next = null;
             } else
             {
-                for (BucketNode bn=head; bn.next!=null; bn=bn.next)
+                BucketNode bn = head;
+                for (; bn!=null; bn=bn.next)
                 {
                 }
-                bn.next = newNode;
+                bn.next = null;
+                bn = newNode;
             }
         }
     }
 
     public Bucket[] HTArr;
+    public StringComparator sc;
+    public StringHasher sh;
+
+    /*Auxiliary method for finding highest prime number less than double the table size;
+    * resizing will be to this value.*/
+    private int maxPrimeUnderDouble(int x)
+    {
+        int y = x;
+        x*=2;
+        for (int i=x-1; i>=y; i--)
+        {
+            boolean isPrime = true;
+            for (int j=2; j<=Math.sqrt(i)&&isPrime; j++)
+            {
+                if (i%j==0) {
+                    isPrime = false;
+                }
+            }
+            if (isPrime)
+            {
+                y = i;
+                break;
+            }
+        }
+        return y;
+    }
+
+    /*Auxiliary method to resize the table*/
+    public void resize()
+    {
+        int newSize = maxPrimeUnderDouble(HTArr.length);
+        HTArr = new Bucket[newSize];
+    }
 
 	public HashTable_SC(Comparator<String> c, Hasher h) {
 		// TODO: To-be implemented
+        sc = (StringComparator)c;
+        sh = (StringHasher)h;
+        HTArr = new Bucket[sh.tableSize];
 	}
 
 	@Override
 	public void incCount(String data) {
 		// TODO Auto-generated method stub
+        if (getSize()>=HTArr.length/2)
+            resize();
+        int bucketIndex = sh.hash(data);
+        if (HTArr[bucketIndex]==null)
+        {
+            HTArr[bucketIndex] = new Bucket();
+            HTArr[bucketIndex].add(new DataCount(data.toLowerCase(),1));
+        } else //there's a bucket with something in it at that index; must compare our data with strings
+        {
+            Bucket.BucketNode bn = HTArr[bucketIndex].head;
+            boolean found = false;
+            for (; bn!=null&&!found; bn=bn.next)
+            {
+                if (sc.compare(data.toLowerCase(),bn.element.data)==0)
+                {
+                    found = true;
+                    bn.element.count++;
+                }
+            }
+            if (!found)
+            {
+                HTArr[bucketIndex].add(new DataCount(data.toLowerCase(),1));
+            }
+        }
 	}
 
 	@Override
 	public int getSize() {
 		// TODO Auto-generated method stub
-		return 0;
+        int x = 0;
+        for (int i=0; i<HTArr.length; i++)
+        {
+            if (HTArr[i]!=null)
+                x++;
+        }
+		return x;
 	}
 
 	@Override
 	public int getCount(String data) {
 		// TODO Auto-generated method stub
+        boolean found = false;
+        for (int i=0; i<HTArr.length&&!found; i++)
+        {
+            if (HTArr[i]!=null)
+            {
+                Bucket.BucketNode bn = HTArr[i].head;
+
+                for (; bn!=null&&!found; bn=bn.next) {
+                    if (sc.compare(data.toLowerCase(),bn.element.data) == 0)
+                    {
+                        found = true;
+                        return bn.element.count;
+                    }
+                }
+            }
+        }
 		return 0;
 	}
 
