@@ -10,7 +10,7 @@ import providedCode.Hasher;
  */
 public class StringHasher implements Hasher {
 
-    int tableSize = 13;
+    HashTable_SC.Bucket[] buckets;
 	/**
 	 * TODO Replace this comment with your own as appropriate.
 	 */
@@ -23,6 +23,6 @@ public class StringHasher implements Hasher {
         {
             sum+=cArr[i];
         }
-		return sum%tableSize;
+		return sum%buckets.length;
 	}
 }
