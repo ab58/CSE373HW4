@@ -114,7 +114,8 @@ public class HashTable_SC extends DataCounter {
 		// TODO: To-be implemented
         sc = (StringComparator)c;
         sh = (StringHasher)h;
-        HTArr = new Bucket[sh.tableSize];
+        HTArr = new Bucket[13];
+        sh.buckets = HTArr;
 	}
 
 	@Override
