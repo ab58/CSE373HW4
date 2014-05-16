@@ -83,27 +83,25 @@ public class HashTable_SC extends DataCounter {
 
     /*Auxiliary method for finding highest prime number less than double the table size;
     * resizing will be to this value.*/
-    private int maxPrimeUnderDouble(int x)
-    {
-        int y = x;
-        x*=2;
-        for (int i=x-1; i>=y; i--)
-        {
-            boolean isPrime = true;
-            for (int j=2; j<=Math.sqrt(i)&&isPrime; j++)
-            {
-                if (i%j==0) {
-                    isPrime = false;
-                }
+ //
+   private int maxPrimeUnderDouble(int x) {
+      int y = x;
+      x = x * 2;
+      int i = x - 1;
+      for (;i >= y; i--) {
+         boolean isPrime = true;
+         for (int j = 2; j <= Math.sqrt(i) && isPrime; j++) {
+            if (i % j == 0) {
+                isPrime = false;
             }
-            if (isPrime)
-            {
-                y = i;
-                break;
-            }
-        }
-        return y;
-    }
+         }
+         if (isPrime) {
+            y = i;
+            break;
+         }
+      }
+      return y;
+   }
 
     /*Auxiliary method to resize the table*/
     public void resize()
