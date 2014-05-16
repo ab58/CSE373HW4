@@ -97,7 +97,7 @@ public SimpleIterator getIterator() {
             if (cur == 0 && array[cur] != null) {
                return true; 
             }
-            else if (array[cur + 1] != null) {
+            else if (cur != array.length && array[cur + 1] != null) {
                return true;
             }
             else {
