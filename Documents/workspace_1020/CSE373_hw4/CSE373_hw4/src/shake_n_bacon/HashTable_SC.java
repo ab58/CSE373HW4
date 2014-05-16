@@ -107,7 +107,10 @@ public class HashTable_SC extends DataCounter {
     public void resize()
     {
         int newSize = maxPrimeUnderDouble(HTArr.length);
-        HTArr = new Bucket[newSize];
+        Bucket[] temp; = new Bucket[newSize];
+        for(int i=0; i<HTArr.length; i++)
+        	temp[i] = HTArr[i];
+        HTArr = temp;
     }
 
 	public HashTable_SC(Comparator<String> c, Hasher h) {
