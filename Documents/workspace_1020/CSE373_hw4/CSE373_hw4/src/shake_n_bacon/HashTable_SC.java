@@ -2,11 +2,13 @@ package shake_n_bacon;
 
 import providedCode.*;
 
+import java.util.NoSuchElementException;
+
 /**
- * Patrick Harper-Joles / Arjun Bhalla
- * hatrik42 / ab58
- * 1440683 / 1363119
- * hatrik42@uw.edu / arjunbhalla675@gmail.com
+ * @author <name>
+ * @UWNetID <uw net id>
+ * @studentID <id number>
+ * @email <email address>
  * 
  *        TODO: Replace this comment with your own as appropriate.
  * 
@@ -107,10 +109,7 @@ public class HashTable_SC extends DataCounter {
     public void resize()
     {
         int newSize = maxPrimeUnderDouble(HTArr.length);
-        Bucket[] temp; = new Bucket[newSize];
-        for(int i=0; i<HTArr.length; i++)
-        	temp[i] = HTArr[i];
-        HTArr = temp;
+        HTArr = new Bucket[newSize];
     }
 
 	public HashTable_SC(Comparator<String> c, Hasher h) {
@@ -184,9 +183,79 @@ public class HashTable_SC extends DataCounter {
 		return 0;
 	}
 
+    private class HashTable_SC_Iterator implements SimpleIterator {
+
+        private Bucket[] array;
+        private int curIndex;
+        private Bucket.BucketNode curNode;
+
+        public HashTable_SC_Iterator(Bucket[] b) {
+            array = b;
+            curIndex = 0;
+        }
+        @Override
+        public DataCount next() {
+
+            if (curNode!=null)
+            {
+                curNode = curNode.next;
+                if (curNode!=null)
+                    return curNode.element;
+                else if (curIndex==array.length-1)
+                    throw new NoSuchElementException("No next element!");
+                else
+                    for (; curIndex<array.length; curIndex++)
+                    {
+                        if (array[curIndex]!=null) {
+                            Bucket curBucket = array[curIndex];
+                            curNode = curBucket.head;
+                            break;
+                        }
+                    }
+                    return curNode.element;
+
+            } else
+            {
+               for (; curIndex<array.length; curIndex++)
+               {
+                   if (array[curIndex]!=null) {
+                       Bucket curBucket = array[curIndex];
+                       curNode = curBucket.head;
+                       break;
+                   }
+               }
+               return curNode.element;
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            if (curNode!=null)
+            {
+                curNode = curNode.next;
+                if (curNode!=null)
+                    return true;
+                else
+                    for (; curIndex<array.length; curIndex++)
+                    {
+                        if (array[curIndex]!=null)
+                            return true;
+                    }
+            } else
+            {
+                for (; curIndex<array.length; curIndex++)
+                {
+                    if (array[curIndex]!=null)
+                        return true;
+                }
+            }
+            return false;
+        }
+    }
+
 	@Override
 	public SimpleIterator getIterator() {
-		return null;
+		return new HashTable_SC_Iterator(HTArr);
 	}
 
 }
