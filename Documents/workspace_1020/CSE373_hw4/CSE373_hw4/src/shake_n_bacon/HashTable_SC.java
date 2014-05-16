@@ -156,7 +156,8 @@ public class HashTable_SC extends DataCounter {
         for (int i=0; i<HTArr.length; i++)
         {
             if (HTArr[i]!=null)
-                x++;
+                for (Bucket.BucketNode n=HTArr[i].head; n!=null; n=n.next)
+                    x++;
         }
 		return x;
 	}
