@@ -5,6 +5,12 @@ import java.io.IOException;
 import providedCode.*;
 
 /**
+ * Patrick Harper-Joles / Arjun Bhalla
+ * hatrik42 / ab58
+ * 1440683 / 1363119
+ * hatrik42@uw.edu / arjunbhalla675@gmail.com
+ *
+ *
  * An executable that counts the words in a files and prints out the counts in
  * descending order. You will need to modify this file.
  */
@@ -16,23 +22,14 @@ public class WordCount {
 	// containing each unique word.
 	private static DataCount[] getCountsArray(DataCounter counter) {
 		DataCount[] count = new DataCount[BASE];
-      		
-      	SimpleIterator itr = counter.getIterator();
-      	int i = 0;
-      	while (itr.hasNext()) {
-        	if (i == count.length - 1) {
-            	DataCount[] temp = new DataCount[count.length * 2];
-            	for (int j = 0; j < count.length; j++) {
-               		temp[j] = count[j];
-            	}
-            	count = temp;
-        	}
-        	count[i] = itr.next();
-        	i++; 
-      	}
-      	return count;
+      SimpleIterator itr = counter.getIterator();
+      int i = 0;
+      while (itr.hasNext()) {
+         count[i] = itr.next();
+         i++; 
+      }
+      return count;
 	}
-
 
 	// ////////////////////////////////////////////////////////////////////////
 	// /////////////// DO NOT MODIFY ALL THE METHODS BELOW ///////////////////
