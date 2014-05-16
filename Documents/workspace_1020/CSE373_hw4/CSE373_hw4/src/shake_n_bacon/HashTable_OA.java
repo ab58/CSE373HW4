@@ -3,10 +3,10 @@ package shake_n_bacon;
 import providedCode.*;
 
 /**
- * @author <name>
- * @UWNetID <uw net id>
- * @studentID <id number>
- * @email <email address>
+ * Patrick Harper-Joles / Arjun Bhalla
+ * hatrik42 / ab58
+ * 1440683 / 1363119
+ * hatrik42@uw.edu / arjunbhalla675@gmail.com
  * 
  *        TODO: Replace this comment with your own as appropriate.
  * 
@@ -35,26 +35,55 @@ import providedCode.*;
  *        TODO: Develop appropriate tests for your HashTable.
  */
 public class HashTable_OA extends DataCounter {
-
+   private DataCount[] array;
+   private Hasher ha;
+   
 	public HashTable_OA(Comparator<String> c, Hasher h) {
-		// TODO: To-be implemented
+		array = new DataCount[17];
+      ha = h; 
 	}
 
 	@Override
 	public void incCount(String data) {
-		// TODO Auto-generated method stub
+		if (getSize() >= array.length / 2) {
+         resize();
+      }
+      int key = ha.hash(data);
+      key = key % array.length;
+      while (array[key] != null && array[key].data != data) {
+         key++;
+      }
+      if (array[key] == null) {
+         DataCount temp = new DataCount(data, 1);
+         array[key] = temp;                 
+      }
+      else {
+         array[key].count++;
+      }
 	}
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		int size = 0;
+      for (int i = 0; i < array.length; i++) {
+         if (array[i] !=null) {
+            size++;
+         }
+      }
+		return size;
 	}
 
 	@Override
 	public int getCount(String data) {
-		// TODO Auto-generated method stub
-		return 0;
+	   int key = ha.hash(data);
+      while (array[key].data != data) {
+         key++;
+      }
+      if (array[key].data == data) {
+         return array[key].count;
+      }
+      return 0;
+        
 	}
 
 	@Override
@@ -62,5 +91,23 @@ public class HashTable_OA extends DataCounter {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+   
+   //
+   public int searcher (int key) {
+      if (array[key] != null) {
+         searcher(key + 1);
+      }
+      else {
+         return key;
+      }
+   }
+   
+   //
+   public void resize () {
+      DataCount[] temp = new DataCount[next prime?];
+      for (int i = 0; i < array.length; i++) {
+         temp[i] = ha.hash(count[i])?;
+      }
+      array = temp;
+   }
 }
