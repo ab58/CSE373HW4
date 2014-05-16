@@ -88,9 +88,35 @@ public class HashTable_OA extends DataCounter {
 
 	@Override
 	public SimpleIterator getIterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+public SimpleIterator getIterator() {
+      return new SimpleIterator() {
+         int cur = 0;
+         
+         //
+         public boolean hasNext() {
+            if (cur == 0 && array[cur] != null) {
+               return true; 
+            }
+            else if (array[cur + 1] != null) {
+               return true;
+            }
+            else {
+               return false;
+            }
+         }
+         
+         //
+         public DataCount next() {
+            if (hasNext()) {
+               DataCount next = array[cur];
+               cur++;
+               return next;
+            }
+            cur++;
+            return null;
+         }
+      };
+   }
    
    //
    public int searcher (int key) {
