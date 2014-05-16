@@ -129,11 +129,35 @@ public SimpleIterator getIterator() {
    }
    
    //
+    //
    public void resize () {
-      DataCount[] temp = new DataCount[next prime?];
+      DataCount[] temp = new DataCount[maxPrimeUnderDouble(array.length)];
       for (int i = 0; i < array.length; i++) {
-         temp[i] = ha.hash(count[i])?;
+         if (array[i] != null) {
+            int x = ha.hash(array[i].data);
+            temp[x] = array[i];
+         }
       }
       array = temp;
+   }
+   
+   //
+   private int maxPrimeUnderDouble(int x) {
+      int y = x;
+      x = x * 2;
+      int i = x - 1;
+      for (;i >= y; i--) {
+         boolean isPrime = true;
+         for (int j = 2; j <= Math.sqrt(i) && isPrime; j++) {
+            if (i % j == 0) {
+                isPrime = false;
+            }
+         }
+         if (isPrime) {
+            y = i;
+            break;
+         }
+      }
+      return y;
    }
 }
