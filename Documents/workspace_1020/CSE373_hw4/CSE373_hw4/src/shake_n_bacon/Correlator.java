@@ -5,10 +5,10 @@ import java.io.IOException;
 import providedCode.*;
 
 /**
- * @author <name>
- * @UWNetID <uw net id>
- * @studentID <id number>
- * @email <email address>
+ * Patrick Harper-Joles / Arjun Bhalla
+ * hatrik42 / ab58
+ * 1440683 / 1363119
+ * hatrik42@uw.edu / arjunbhalla675@gmail.com
  * 
  *        TODO: REPLACE this comment with your own as appropriate.
  * 
