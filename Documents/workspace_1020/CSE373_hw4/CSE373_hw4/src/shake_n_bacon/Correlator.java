@@ -4,38 +4,22 @@ import java.io.IOException;
 
 import providedCode.*;
 
-/**
- * Patrick Harper-Joles / Arjun Bhalla
- * hatrik42 / ab58
- * 1440683 / 1363119
- * hatrik42@uw.edu / arjunbhalla675@gmail.com
- * 
- *        TODO: REPLACE this comment with your own as appropriate.
- * 
- *        This should be done using a *SINGLE* iterator. This means only 1
- *        iterator being used in Correlator.java, *NOT* 1 iterator per
- *        DataCounter (You should call dataCounter.getIterator() just once in
- *        Correlator.java). Hint: Take advantage of DataCounter's method.
- * 
- *        Although you can share argument processing code with WordCount, it
- *        will be easier to copy & paste it from WordCount and modify it here -
- *        it is up to you. Since WordCount does not have states, making private
- *        method public to share with Correlator is OK. In general, you are not
- *        forbidden to make private method public, just make sure it does not
- *        violate style guidelines.
- * 
- *        Make sure WordCount and Correlator do not print anything other than
- *        what they are supposed to print (e.g. do not print timing info, input
- *        size). To avoid this, copy these files into package writeupExperiment
- *        and change it there as needed for your write-up experiments.
- */
+// Patrick Harper-Joles / Arjun Bhalla
+// hatrik42 / ab58
+// 1440683 / 1363119
+// hatrik42@uw.edu / arjunbhalla675@gmail.com
+
+//
+
 public class Correlator {
-   double variance = 0.0;
-   int firstTotal = 0;
-   int secondTotal = 0;
+   static double variance;
+   private static final int BASE = 1000;
+   static int firstTotal;
+   static int secondTotal;
+   static double totalVar;
    
-	public static void main(String[] args) {
-		      
+   //
+	public static void main(String[] args) {      
       if (args.length != 2) {
 			usage();
 		}
@@ -62,13 +46,24 @@ public class Correlator {
 		insertionSort(counts2, new DataCountStringComparator());
       secondTotal = totalWords(counts2);
       
-      comparison(counts1, counts2, firstTotal, secondTotal);
-      
-      variance = totalVar;
+      variance = comparison(counts1, counts2, firstTotal, secondTotal);;
       
 		System.out.println(variance);
 	}
    
+   //
+ 	private static DataCount[] getCountsArray(DataCounter counter) {
+		DataCount[] count = new DataCount[BASE];
+      SimpleIterator itr = counter.getIterator();
+      int i = 0;
+      while (itr.hasNext()) {
+         count[i] = itr.next();
+         i++; 
+      }
+      return count;
+	}
+   
+   //
    private static void countWords(String file, DataCounter counter) {
 		try {
 			FileWordReader reader = new FileWordReader(file);
@@ -83,6 +78,7 @@ public class Correlator {
 		}
 	}
    
+   //
    private static <E> void insertionSort(E[] array, Comparator<E> comparator) {
 		for (int i = 1; i < array.length; i++) {
 			E x = array[i];
@@ -96,10 +92,8 @@ public class Correlator {
 			array[j + 1] = x;
 		}
 	}
-
-	/*
-	 * Print error message and exit
-	 */
+   
+   //
 	private static void usage() {
 		System.err
 				.println("Usage: [-s | -o] <filename of document to analyze>");
@@ -131,17 +125,18 @@ public class Correlator {
             
             for (int j = 0; j < limit2; j++) {
                
-               if (counts2[j].data == counts1.data) {
+               if (counts2[j].data == counts1[i].data) {
                   
                   int cur2 = counts2[i].count;
                   double var2 = (double) cur2 / total2;
                   if (var2 < 0.01 && var2 > 0.0001) {
                      double compVar = Math.abs(var1 - var2);
-                     totalvar = totalVar + compVar;
+                     totalVar = totalVar + compVar;
                   }
                }
             }
          }         
       }
+      return totalVar;
    }
 }
