@@ -136,7 +136,7 @@ public class Correlator {
                   int cur2 = counts2[i].count;
                   double var2 = (double) cur2 / total2;
                   if (var2 < 0.01 && var2 > 0.0001) {
-                     compVar = Math.abs(var1 - var2);
+                     double compVar = Math.abs(var1 - var2);
                      totalvar = totalVar + compVar;
                   }
                }
