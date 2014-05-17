@@ -88,7 +88,7 @@ public class HashTable_SC extends DataCounter {
    public void incCount(String data) {
       if (getSize()>=HTArr.length/2)
          resize();
-      int bucketIndex = sh.hash(data);
+      int bucketIndex = sh.hash(data)%HTArr.length;
       if (HTArr[bucketIndex]==null) {
          HTArr[bucketIndex] = new Bucket();
          HTArr[bucketIndex].add(new DataCount(data.toLowerCase(),1));
