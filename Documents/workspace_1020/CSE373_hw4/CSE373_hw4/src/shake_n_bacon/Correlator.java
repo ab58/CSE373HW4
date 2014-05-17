@@ -62,6 +62,9 @@ public class Correlator {
 		insertionSort(counts2, new DataCountStringComparator());
       secondTotal = totalWords(counts2);
       
+      comparison(counts1, counts2, firstTotal, secondTotal);
+      
+      variance = totalVar;
       
 		System.out.println(variance);
 	}
@@ -115,7 +118,7 @@ public class Correlator {
    }
    
    //
-   private static double comparison (DataCount[] counts1, DataCount[] counts2, int total) {
+   private static double comparison (DataCount[] counts1, DataCount[] counts2, int total1, int total2) {
       int limit1 = counts1.length;
       int limit2 = counts2.length;
       double totalVar = 0;
@@ -123,7 +126,7 @@ public class Correlator {
       for (int i = 0; i < limit1; i++) {
          
          int cur1 = counts1[i].count;
-         double var1 = cur1 / total;
+         double var1 = (double) cur1 / total1;
          if (var1 < 0.01 && var1 > 0.0001) {
             
             for (int j = 0; j < limit2; j++) {
@@ -131,7 +134,7 @@ public class Correlator {
                if (counts2[j].data == counts1.data) {
                   
                   int cur2 = counts2[i].count;
-                  double var2 = cur2 / total;
+                  double var2 = (double) cur2 / total2;
                   if (var2 < 0.01 && var2 > 0.0001) {
                      compVar = Math.abs(var1 - var2);
                      totalvar = totalVar + compVar;
