@@ -4,23 +4,18 @@ import java.io.IOException;
 
 import providedCode.*;
 
-/**
- * Patrick Harper-Joles / Arjun Bhalla
- * hatrik42 / ab58
- * 1440683 / 1363119
- * hatrik42@uw.edu / arjunbhalla675@gmail.com
- *
- *
- * An executable that counts the words in a files and prints out the counts in
- * descending order. You will need to modify this file.
- */
+// Patrick Harper-Joles / Arjun Bhalla
+// hatrik42 / ab58
+// 1440683 / 1363119
+// hatrik42@uw.edu / arjunbhalla675@gmail.com
+
+//
+
 public class WordCount {
    private static final int BASE = 1000;
 	
-   // TODO: Replace this comment with your own as appropriate.
-	// Implement a method that returns an array of DataCount objects
-	// containing each unique word.
-	private static DataCount[] getCountsArray(DataCounter counter) {
+   //
+ 	private static DataCount[] getCountsArray(DataCounter counter) {
 		DataCount[] count = new DataCount[BASE];
       SimpleIterator itr = counter.getIterator();
       int i = 0;
