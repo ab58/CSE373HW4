@@ -9,7 +9,10 @@ import providedCode.*;
 // 1440683 / 1363119
 // hatrik42@uw.edu / arjunbhalla675@gmail.com
 
-//
+// This class accepts input files and compares their similarity by tracking
+// the words in each file and the number of times they were used.  Then the 
+// counts of each word are examined by their percentage of appearance within
+// each file and compared against one another.
 
 public class Correlator {
    static double variance;
@@ -18,7 +21,7 @@ public class Correlator {
    static int secondTotal;
    static double totalVar;
    
-   //
+   // Main method of class.
 	public static void main(String[] args) {      
       if (args.length != 2) {
 			usage();
@@ -51,7 +54,7 @@ public class Correlator {
 		System.out.println(variance);
 	}
    
-   //
+   // Returns a DataCount array of the words and counts of words.
  	private static DataCount[] getCountsArray(DataCounter counter) {
 		DataCount[] count = new DataCount[BASE];
       SimpleIterator itr = counter.getIterator();
@@ -63,7 +66,7 @@ public class Correlator {
       return count;
 	}
    
-   //
+   // Reads input files.
    private static void countWords(String file, DataCounter counter) {
 		try {
 			FileWordReader reader = new FileWordReader(file);
@@ -78,7 +81,7 @@ public class Correlator {
 		}
 	}
    
-   //
+   // Sorts the input files by number of word appearance.
    private static <E> void insertionSort(E[] array, Comparator<E> comparator) {
 		for (int i = 1; i < array.length; i++) {
 			E x = array[i];
@@ -93,7 +96,7 @@ public class Correlator {
 		}
 	}
    
-   //
+   // Prints instructions about how to use program to user.
 	private static void usage() {
 		System.err
 				.println("Usage: [-s | -o] <filename of document to analyze>");
@@ -102,7 +105,7 @@ public class Correlator {
 		System.exit(1);
 	}
    
-   //
+   // Returns the total number of words in the input file.
    private static int totalWords (DataCount[] counts) {
       int total = 0;
       for (int i = 0; i < counts.length; i++) {
@@ -111,32 +114,34 @@ public class Correlator {
       return total;
    }
    
-   //
-   private static double comparison (DataCount[] counts1, DataCount[] counts2, int total1, int total2) {
-      int limit1 = counts1.length;
-      int limit2 = counts2.length;
-      double totalVar = 0;
+   // Compares the two input files to determine the variance from one another
+   // based off of difference.
+   private static double comparison (DataCount[] counts1, DataCount[] counts2, 
+      int total1, int total2) {
+         int limit1 = counts1.length;
+         int limit2 = counts2.length;
+         double totalVar = 0;
       
-      for (int i = 0; i < limit1; i++) {
+         for (int i = 0; i < limit1; i++) {
          
-         int cur1 = counts1[i].count;
-         double var1 = (double) cur1 / total1;
-         if (var1 < 0.01 && var1 > 0.0001) {
+            int cur1 = counts1[i].count;
+            double var1 = (double) cur1 / total1;
+            if (var1 < 0.01 && var1 > 0.0001) {
             
-            for (int j = 0; j < limit2; j++) {
+               for (int j = 0; j < limit2; j++) {
                
-               if (counts2[j].data == counts1[i].data) {
+                  if (counts2[j].data == counts1[i].data) {
                   
-                  int cur2 = counts2[i].count;
-                  double var2 = (double) cur2 / total2;
-                  if (var2 < 0.01 && var2 > 0.0001) {
-                     double compVar = Math.abs(var1 - var2);
-                     totalVar = totalVar + compVar;
+                     int cur2 = counts2[i].count;
+                     double var2 = (double) cur2 / total2;
+                     if (var2 < 0.01 && var2 > 0.0001) {
+                        double compVar = Math.abs(var1 - var2);
+                        totalVar = totalVar + compVar;
+                     }
                   }
                }
-            }
-         }         
-      }
-      return totalVar;
+            }         
+         }
+         return totalVar;
    }
 }
