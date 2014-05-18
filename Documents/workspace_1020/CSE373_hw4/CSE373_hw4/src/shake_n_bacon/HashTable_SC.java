@@ -8,13 +8,15 @@ import providedCode.*;
 // 1440683 / 1363119
 // hatrik42@uw.edu / arjunbhalla675@gmail.com
 
-//
+// This class creates a HashTable using the Seperate Chaining model.
 
 public class HashTable_SC extends DataCounter {
    
+   // Inner class for the creation of BucketNodes.
    public class Bucket {
       public BucketNode head;
-
+         
+         // Inner class defining BucketNode objects.
          public class BucketNode {
             public BucketNode next;
             public DataCount element;
@@ -24,11 +26,13 @@ public class HashTable_SC extends DataCounter {
                element = el;
             }
          }
-
+         
+         // Constructs new Bucket objects.
          public Bucket() {
             head = null;
          }
-
+         
+         // Adds new BucketNodes to current Bucket list.
          public void add(DataCount dc) {
             BucketNode newNode = new BucketNode(dc);
             if (head==null) {
@@ -38,9 +42,9 @@ public class HashTable_SC extends DataCounter {
             else {
                 BucketNode bn = head;
                 for (; bn!=null; bn=bn.next) {
+                  bn.next = null;
+                  bn = newNode;
                 }
-                bn.next = null;
-                bn = newNode;
             }
        }
    }
@@ -84,11 +88,13 @@ public class HashTable_SC extends DataCounter {
       //sh.buckets = HTArr;
    }
 
-   //
+   // Creates DataCount nodes, hashes the given string value, and inserts
+   // the DataCount node into the HashTable at the hashed value index.
    public void incCount(String data) {
       if (getSize()>=HTArr.length/2)
          resize();
-      int bucketIndex = sh.hash(data)%HTArr.length;
+      int bucketIndex = sh.hash(data);
+      bucketIndex = bucketIndex % HTArr.length;
       if (HTArr[bucketIndex]==null) {
          HTArr[bucketIndex] = new Bucket();
          HTArr[bucketIndex].add(new DataCount(data.toLowerCase(),1));
@@ -109,7 +115,7 @@ public class HashTable_SC extends DataCounter {
       }
    }
 
-   //
+   // Returns the number of unique DataCount nodes in the HashTable.
    public int getSize() {
       int x = 0;
       for (int i=0; i<HTArr.length; i++) {
@@ -120,7 +126,7 @@ public class HashTable_SC extends DataCounter {
       return x;
    }
 
-   //
+   // Returns the count in the HashTable of the given DataCount data value.
    public int getCount(String data) {
       boolean found = false;
       for (int i=0; i<HTArr.length&&!found; i++) {
@@ -137,14 +143,14 @@ public class HashTable_SC extends DataCounter {
       return 0;
    }
    
-   //
+   // Creates a class iterator used to look through HashTable DataCount nodes.
    public SimpleIterator getIterator() {
       return new SimpleIterator () {
          private Bucket[] array;
          private int curIndex;
          private Bucket.BucketNode curNode;
       
-         //
+         // Returns the next DataCount node.
          public DataCount next() {
             if (curNode!=null) {
                curNode = curNode.next;
@@ -176,11 +182,10 @@ public class HashTable_SC extends DataCounter {
                   return curNode.element;
                }
             }
-            ////////////
             return null;
          }
 
-      //
+      // Returns true if a next DataCount value exists.
       public boolean hasNext() {
          if (curNode!=null) {
             curNode = curNode.next;
