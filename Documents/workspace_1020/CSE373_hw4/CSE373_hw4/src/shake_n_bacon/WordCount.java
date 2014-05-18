@@ -9,12 +9,14 @@ import providedCode.*;
 // 1440683 / 1363119
 // hatrik42@uw.edu / arjunbhalla675@gmail.com
 
-//
+// This main class accepts input arguments and, using companion classes,
+// determines the words used and number of times they appeared.  The class
+// then sorts and prints those words/counts for review.
 
 public class WordCount {
-   private static final int BASE = 1000;
+   private static final int BASE = 2000000;
 	
-   //
+   // Returns a DataCount array of the words and counts of words.
  	private static DataCount[] getCountsArray(DataCounter counter) {
 		DataCount[] count = new DataCount[BASE];
       SimpleIterator itr = counter.getIterator();
