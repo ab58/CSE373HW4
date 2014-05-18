@@ -7,11 +7,11 @@ import providedCode.*;
 // 1440683 / 1363119
 // hatrik42@uw.edu / arjunbhalla675@gmail.com
 
-//
+// This class compares String values against each other.
 
 public class StringComparator implements Comparator<String> {
    
-   //
+   // Compares String values to determine which has a higher integer value.
    public int compare(String s1, String s2) {
       String shorter = null;
       String longer = null;
