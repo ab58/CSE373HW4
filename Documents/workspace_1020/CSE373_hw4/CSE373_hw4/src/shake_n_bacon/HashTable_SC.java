@@ -6,10 +6,9 @@ import providedCode.*;
 
 
 
-// Patrick Harper-Joles / Arjun Bhalla
+
 // hatrik42 / ab58
-// 1440683 / 1363119
-// hatrik42@uw.edu / arjunbhalla675@gmail.com
+
 
 
 // This class creates a HashTable using the Seperate Chaining model.
